@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { validateId } from "../middlewares/validation";
 
-import { getHotelById } from "services/hotel.service";
+import { validateId } from "../middlewares/validation";
+import { getHotelById } from "../services/hotel.service";
 
 export const hotelRoutes = Router();
 

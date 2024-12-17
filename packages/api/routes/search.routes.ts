@@ -7,5 +7,8 @@ export const searchRoutes = express.Router();
 
 searchRoutes.get("/", validateSearchQuery, async (req, res, next) => {
   const result = await searchService.search(req.query.q as string);
-  res.json(result);
+  res.json({
+    status: "success",
+    data: result,
+  });
 });

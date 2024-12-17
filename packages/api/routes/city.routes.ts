@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import { getCityById } from "../services/city.service";
 
 export const cityRoutes = Router();

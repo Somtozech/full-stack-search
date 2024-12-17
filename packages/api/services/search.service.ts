@@ -1,11 +1,7 @@
 import { SearchResults } from "types";
 
 import * as db from "../config/database";
-import { AvailableCollections } from "enums";
-
-interface SearchAccumulator extends SearchResults {
-  [key: string]: any[];
-}
+import { AvailableCollections } from "../enums";
 
 export const search = async (query: string): Promise<SearchResults> => {
   const results = await db
@@ -47,7 +43,7 @@ export const search = async (query: string): Promise<SearchResults> => {
     ])
     .toArray();
 
-  return results.reduce<SearchAccumulator>(
+  return results.reduce(
     (acc, item) => {
       const { type, ...rest } = item;
       acc[type].push(rest);

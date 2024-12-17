@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { getCountryById } from "services/country.service";
+import { getCountryById } from "../services/country.service";
 
 export const countryRoutes = Router();
 
