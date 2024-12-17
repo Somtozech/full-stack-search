@@ -4,11 +4,12 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch --clear-screen=false ./server.ts",
+    "dev": "tsx watch --clear-screen=false .",
     "dev:api": "npm run dev",
     "dev:no-watch": "tsx .",
     "build": "tsc",
-    "build:api": "npm run build"
+    "build:api": "npm run build",
+    "seed": "tsx db/startAndSeedMemoryDB.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +19,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongodb": "^6.7.0",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
