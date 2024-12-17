@@ -12,11 +12,13 @@ export const search = async (query: string): Promise<SearchResults> => {
     .getCollection(AvailableCollections.Hotels)
     .aggregate([
       {
-        $or: [
-          { hotel_name: createRegexFilter(query) },
-          { city: createRegexFilter(query) },
-          { country: createRegexFilter(query) },
-        ],
+        $match: {
+          $or: [
+            { hotel_name: createRegexFilter(query) },
+            { city: createRegexFilter(query) },
+            { country: createRegexFilter(query) },
+          ],
+        },
       },
       { $project: { _id: 1, hotel_name: 1, city: 1, country: 1 } },
       { $addFields: { type: "hotels" } },
@@ -36,7 +38,7 @@ export const search = async (query: string): Promise<SearchResults> => {
         $unionWith: {
           coll: "cities",
           pipeline: [
-            { name: createRegexFilter(query) },
+            { $match: { name: createRegexFilter(query) } },
             { $project: { _id: 1, name: 1 } },
             { $addFields: { type: "cities" } },
           ],
