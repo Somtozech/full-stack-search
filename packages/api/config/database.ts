@@ -1,4 +1,4 @@
-import { MongoClient, Db, Collection } from "mongodb";
+import { MongoClient, Db, Collection, Document } from "mongodb";
 
 import { logger } from "../utils/logger";
 import { config } from "../config";
@@ -28,9 +28,9 @@ export const getInstance = (): Db => {
   return db;
 };
 
-export const getCollection = (key: AvailableCollections): Collection => {
+export const getCollection = <T extends Document>(key: AvailableCollections): Collection<T> => {
   const db = getInstance();
-  return db.collection(key);
+  return db.collection<T>(key);
 };
 
 const createSearchIndexes = async (db: Db) => {

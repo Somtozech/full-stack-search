@@ -1,5 +1,7 @@
-export interface Hotel {
-  _id: string;
+import { Document, ObjectId } from "mongodb";
+
+export interface Hotel extends Document {
+  _id: ObjectId;
   chain_name: string;
   hotel_name: string;
   addressline1: string;
@@ -12,13 +14,13 @@ export interface Hotel {
   star_rating: number;
 }
 
-export interface City {
-  _id: string;
+export interface City extends Document {
+  _id: ObjectId;
   name: string;
 }
 
-export interface Country {
-  _id: string;
+export interface Country extends Document {
+  _id: ObjectId;
   country: string;
   countryisocode: string;
 }
