@@ -10,3 +10,10 @@ export enum HttpStatusCodes {
   InternalServerError = 500,
   BadGateway = 502,
 }
+
+
+export enum AvailableCollections {
+  Hotels = "hotels",
+  Cities = "cities",
+  Countries = "countries",
+}
