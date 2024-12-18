@@ -1,15 +1,18 @@
 // src/middleware/validation.ts
 import { Request, Response, NextFunction } from "express";
-import { z } from "zod";
-import { BadRequestError } from "../utils/errors";
 import { ObjectId } from "mongodb";
+import Joi from "joi";
 
-const searchQuerySchema = z.object({
-  q: z.string().min(1).max(100),
+import { BadRequestError } from "../utils/errors";
+import { config } from "../config";
+
+const searchQuerySchema = Joi.object({
+  q: Joi.string().required(),
+  limit: Joi.number().integer().min(5).max(config.search.maxLimit),
 });
 
-export const validateSearchQuery = (req: Request, res: Response, next: NextFunction) => {
-  const query = searchQuerySchema.parse({ q: req.query.q });
+export const validateSearchQuery = async (req: Request, res: Response, next: NextFunction) => {
+  const query = await searchQuerySchema.validateAsync(req.query, { convert: true });
   req.query = query;
   next();
 };

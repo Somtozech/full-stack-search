@@ -2,8 +2,17 @@ import { SearchResults } from "types";
 
 import * as db from "../config/database";
 import { AvailableCollections } from "../enums";
+import { config } from "../config";
 
-export const search = async (query: string): Promise<SearchResults> => {
+export const search = async (
+  query: string,
+  options?: {
+    limit?: number;
+  }
+): Promise<SearchResults> => {
+  const totalLimit = options?.limit ?? config.search?.defaultLimit;
+  const limit = Math.ceil(totalLimit / 3);
+
   const results = await db
     .getCollection(AvailableCollections.Hotels)
     .aggregate([
@@ -18,6 +27,7 @@ export const search = async (query: string): Promise<SearchResults> => {
       },
       { $project: { _id: 1, hotel_name: 1, city: 1, country: 1 } },
       { $addFields: { type: "hotels" } },
+      { $limit: limit },
       // Add countries results
       {
         $unionWith: {
@@ -26,6 +36,7 @@ export const search = async (query: string): Promise<SearchResults> => {
             { $match: { country: createRegexFilter(query) } },
             { $project: { _id: 1, country: 1 } },
             { $addFields: { type: "countries" } },
+            { $limit: limit },
           ],
         },
       },
@@ -37,9 +48,11 @@ export const search = async (query: string): Promise<SearchResults> => {
             { $match: { name: createRegexFilter(query) } },
             { $project: { _id: 1, name: 1 } },
             { $addFields: { type: "cities" } },
+            { $limit: limit },
           ],
         },
       },
+      { $limit: totalLimit },
     ])
     .toArray();
 
