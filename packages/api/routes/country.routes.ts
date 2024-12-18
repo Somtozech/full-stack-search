@@ -6,7 +6,6 @@ export const countryRoutes = Router();
 
 countryRoutes.get("/:id", async (req, res, next) => {
   const country = await getCountryById(req.params.id);
-  res.json(country);
 
   res.json({
     status: "success",

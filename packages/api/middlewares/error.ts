@@ -17,8 +17,7 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
 
   res.status(httpError.status).json({
     status: "error",
-    error: httpError.message,
-    timestamp: new Date().toISOString(),
+    message: httpError.message,
   });
 };
 
