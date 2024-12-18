@@ -43,6 +43,13 @@ body {
 
 }
 
+.form .spinner-border {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #9ca3af;
+
+}
 .form span {
   position: absolute;
   right: 17px;
