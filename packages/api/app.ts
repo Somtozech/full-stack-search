@@ -1,12 +1,12 @@
 import "express-async-errors";
-import express, { Request, Response } from "express";
+import express, { Request, Response, Express } from "express";
 import cors from "cors";
 
 import { config } from "./config";
 import { apiRouter } from "./routes";
 import { errorHandler, notFoundHandler } from "./middlewares/error";
 
-export const createApp = () => {
+export const createApp = (): Express => {
   const app = express();
 
   app.use(cors(config.cors));

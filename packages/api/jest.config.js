@@ -13,5 +13,11 @@ export default {
 
   testTimeout: 10000,
 
-  setupFilesAfterEnv: ["./test/setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/test/setup.ts"],
+
+  // A path to a module which exports an async function that is triggered once before all test suites
+  globalSetup: "<rootDir>/test/globalSetup.ts",
+
+  // A path to a module which exports an async function that is triggered once after all test suites
+  globalTeardown: "<rootDir>/test/globalTeardown.ts",
 };

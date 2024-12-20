@@ -2,7 +2,7 @@ import { MongoClient, Db, Collection, Document } from "mongodb";
 
 import { logger } from "../utils/logger";
 import { config } from "../config";
-import { AvailableCollections } from "enums";
+import { AvailableCollections } from "../enums";
 
 let client: MongoClient | null = null;
 let db: Db | null = null;
@@ -14,7 +14,7 @@ export const connect = async (): Promise<void> => {
 
     logger.info(`Successfully connected to Database at ${config.database.uri}`);
 
-    await createSearchIndexes(db);
+    await syncSearchIndexes(db);
   } catch (error) {
     logger.error("Database connection error:", error);
     process.exit(1);
@@ -33,19 +33,25 @@ export const getCollection = <T extends Document>(key: AvailableCollections): Co
   return db.collection<T>(key);
 };
 
-const createSearchIndexes = async (db: Db) => {
+const syncSearchIndexes = async (db: Db) => {
   try {
     await db
-      .collection("hotels")
+      .collection(AvailableCollections.Hotels)
       .createIndexes([{ key: { hotel_name: 1 } }, { key: { city: 1 } }, { key: { country: 1 } }]);
 
-    await db.collection("cities").createIndex({ name: 1 });
+    await db.collection(AvailableCollections.Cities).createIndex({ name: 1 });
 
-    await db.collection("countries").createIndex({ country: 1 });
+    await db.collection(AvailableCollections.Countries).createIndex({ country: 1 });
 
     logger.info("Database indexes created successfully");
   } catch (error) {
     logger.error("Error creating indexes:", error);
     throw error;
+  }
+};
+
+export const reset = async () => {
+  for (const collection of Object.values(AvailableCollections)) {
+    await getCollection(collection).deleteMany({});
   }
 };
