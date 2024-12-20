@@ -143,6 +143,7 @@ I implemented a search solution that allows users to search across multiple coll
 5. **Testing**
    - Implement end-to-end testing (using playwright)
    - Increase test coverage
+   - Organizing backend tests into dedicated folders for unit, integration, and end-to-end (e2e) tests
 
 _When all the behaviour is implemented, feel free to add some observations or conclusions you like to share in the section_
 

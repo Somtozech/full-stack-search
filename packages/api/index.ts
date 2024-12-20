@@ -1,38 +1,21 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from 'cors';
-import { MongoClient } from "mongodb";
+import { logger } from "./utils/logger";
+import { createApp } from "./app";
+import { config } from "./config";
+import * as db from "./config/database";
 
-dotenv.config();
-
-if (process.env.NODE_ENV !== 'production' && !process.env.DATABASE_URL) {
-  await import('./db/startAndSeedMemoryDB');
-}
-
-const PORT = process.env.PORT || 3001;
-if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
-const DATABASE_URL = process.env.DATABASE_URL;
-
-const app = express();
-
-app.use(cors())
-app.use(express.json());
-
-app.get('/hotels', async (req, res) => {
-  const mongoClient = new MongoClient(DATABASE_URL);
-  console.log('Connecting to MongoDB...');
-
+const startServer = async () => {
   try {
-    await mongoClient.connect();
-    console.log('Successfully connected to MongoDB!');
-    const db = mongoClient.db()
-    const collection = db.collection('hotels');
-    res.send(await collection.find().toArray())
-  } finally {
-    await mongoClient.close();
-  }
-})
+    await db.connect();
 
-app.listen(PORT, () => {
-  console.log(`API Server Started at ${PORT}`)
-})
+    const app = createApp();
+
+    app.listen(config.app.port, () => {
+      logger.info(`Server listening on port: ${config.app.port} ✅`);
+    });
+  } catch (error) {
+    logger.error("Error starting the server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
