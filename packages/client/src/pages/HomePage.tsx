@@ -1,5 +1,6 @@
 import { useSearch } from "../hooks/useSearch";
 import { SearchResults } from "../components/search/searchResults";
+import { getErrorMessage } from "../utils/error";
 
 export const HomePage: React.FC = () => {
   const { searchTerm, setSearchTerm, searchResults, isLoading, isSuccess, error, clearSearch } = useSearch();
@@ -32,7 +33,7 @@ export const HomePage: React.FC = () => {
             {error && (
               <div className="dropdown-menu w-100 show p-2 text-center">
                 <div className="alert alert-danger mb-0" role="alert">
-                  {error}
+                  {getErrorMessage(error)}
                 </div>
               </div>
             )}
