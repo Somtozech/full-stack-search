@@ -26,3 +26,5 @@ yarn-error.log*
 dist
 .idea
 logs/
+
+coverage/
