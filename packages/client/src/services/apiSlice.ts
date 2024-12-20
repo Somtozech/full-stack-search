@@ -14,6 +14,7 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     searchAll: builder.query<SearchResult, string>({
       query: (searchTerm) => `/search?q=${encodeURIComponent(searchTerm)}`,
+      transformResponse: (response: SuccessResponse<SearchResult>) => response.data,
     }),
 
     // Fetch hotel by ID endpoint

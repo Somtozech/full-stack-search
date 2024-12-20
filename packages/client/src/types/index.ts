@@ -1,16 +1,16 @@
 // src/types/index.ts
 export interface Hotel {
   _id: string;
-  chain_name: string;
+  chain_name?: string;
   hotel_name: string;
-  addressline1: string;
+  addressline1?: string;
   addressline2?: string;
-  zipcode: string;
+  zipcode?: string;
   city: string;
   state?: string;
   country: string;
-  countryisocode: string;
-  star_rating: number;
+  countryisocode?: string;
+  star_rating?: number;
 }
 
 export interface City {
@@ -21,7 +21,7 @@ export interface City {
 export interface Country {
   _id: string;
   country: string;
-  countryisocode: string;
+  countryisocode?: string;
 }
 
 export interface SearchResult {
