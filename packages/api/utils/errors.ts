@@ -1,4 +1,4 @@
-import { HttpStatusCodes } from "enums";
+import { HttpStatusCodes } from "../enums";
 
 export class BaseError extends Error {
   constructor(public status: HttpStatusCodes, message: string, public data?: any) {
