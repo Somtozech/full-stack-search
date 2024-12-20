@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Hotel, City, Country } from "../../types";
 
 interface SearchResultsProps {
@@ -9,37 +9,22 @@ interface SearchResultsProps {
 }
 
 export const SearchResults: React.FC<SearchResultsProps> = ({ hotels, cities, countries }) => {
-  const navigate = useNavigate();
-
-  const handleResultClick = (type: "hotel" | "city" | "country", item: Hotel | City | Country) => {
-    switch (type) {
-      case "hotel":
-        navigate(`/hotels/${(item as Hotel)._id}`);
-        break;
-      case "city":
-        navigate(`/cities/${(item as City)._id}`);
-        break;
-      case "country":
-        navigate(`/countries/${(item as Country)._id}`);
-        break;
-    }
-  };
-
   return (
-    <div className="search-dropdown-menu dropdown-menu w-100 show p-2">
+    <div data-testid="search-results" className="search-dropdown-menu dropdown-menu w-100 show p-2">
       {hotels.length > 0 && (
         <>
           <h2>Hotels</h2>
           {hotels.map((hotel) => (
-            <div
+            <Link
+              to={`/hotels/${hotel._id}`}
               key={hotel._id}
               className="dropdown-item cursor-pointer"
-              onClick={() => handleResultClick("hotel", hotel)}
+              data-testid={`hotel-link-${hotel._id}`}
             >
               <i className="fa fa-building mr-2"></i>
               {hotel.hotel_name} - {hotel.city}, {hotel.country}
               <hr className="divider" />
-            </div>
+            </Link>
           ))}
         </>
       )}
@@ -48,15 +33,16 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ hotels, cities, co
         <>
           <h2>Countries</h2>
           {countries.map((country) => (
-            <div
+            <Link
               key={country._id}
+              to={`/countries/${country._id}`}
               className="dropdown-item cursor-pointer"
-              onClick={() => handleResultClick("country", country)}
+              data-testid={`country-link-${country._id}`}
             >
               <i className="fa fa-globe mr-2"></i>
               {country.country}
               <hr className="divider" />
-            </div>
+            </Link>
           ))}
         </>
       )}
@@ -65,20 +51,19 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ hotels, cities, co
         <>
           <h2>Cities</h2>
           {cities.map((city) => (
-            <div
+            <Link
               key={city._id}
+              to={`/cities/${city._id}`}
               className="dropdown-item cursor-pointer"
-              onClick={() => handleResultClick("city", city)}
+              data-testid={`city-link-${city._id}`}
             >
               <i className="fa fa-building mr-2"></i>
               {city.name}
               <hr className="divider" />
-            </div>
+            </Link>
           ))}
         </>
       )}
-
-      {hotels.length === 0 && countries.length === 0 && cities.length === 0 && <p>No results found</p>}
     </div>
   );
 };
