@@ -88,7 +88,61 @@ For larger or more time-intensive changes, you're welcome to outline your ideas 
 
 ### Write-up
 
-<!-- Write-up/conclusion section -->
+### Approach and Implementation
+
+#### Search Functionality
+I implemented a search solution that allows users to search across multiple collections (Hotels, Cities, and Countries) with the following key features:
+- Case-insensitive partial matching
+- Unified search results: One search returns results from all categories.
+- Performance boost with debouncing: Reduces unnecessary API calls by adding a small delay while typing.
+
+#### Technical Highlights
+- Frontend: React with TypeScript and Redux Toolkit, RTK Query for data fetching
+- Backend: Express, MongoDb
+- Testing: Vitest and React Testing Library (Frontend), Jest with Supertest (Backend)
+
+### Challenges and Solutions
+
+1. **Unified Search Mechanism**
+   - Created a single endpoint that searches across multiple collections
+   - Implemented a flexible matching system that works for different types of results using aggregation
+   - Combined various types of results (hotels, cities, countries) into a single, organized response.
+
+2. **Performance Optimization**
+   - Implemented targeted indexes on searchable fields for each collection for faster queries
+   - Minimized database query overhead by using a single aggregation pipeline reducing multiple separate  queries to a single database operation
+   - Used `$project` to select only necessary fields required for the search results
+   - Used debounce to reduce unnecessary API calls on the frontend
+
+3. **User Experience**
+   - Implemented clear search functionality
+   - Loading and error states for better feedback
+   - Created responsive and accessible design
+
+
+### Potential Improvements
+
+1. **Search Functionality**
+   - Add advanced algorithms like full-text and fuzzy matching (e.g., using MongoDB `$text` index)
+   - Implement server-side pagination
+
+2. **Performance**
+   - Add caching mechanisms
+   - Currently my implemenation uses single indexes. Consider Using compound indexes for multi-field search
+   - Consider integrating search engines like algolia or elasticsearch if we need features like full-text search, fuzzy matching, relevance scoring, and geo-search over a large dataset. They offers fast, scalable, and distributed search, ideal for handling large datasets and complex queries. 
+
+3. **Configuration and Deployment**
+   -  Environment Variable Validation: Add validation to the configuration to ensure all required environment variables are present, if the required environment variables are not present the application should fail fast and provide immediate feedback on misconfiguration
+   -  Containerization: Add Docker configuration for easier deployment and local setup
+
+4. **Frontend Enhancements**
+   - Improve error handling UI
+   - Add more detailed loading states
+   - Create more comprehensive accessibility features
+
+5. **Testing**
+   - Implement end-to-end testing (using playwright)
+   - Increase test coverage
 
 _When all the behaviour is implemented, feel free to add some observations or conclusions you like to share in the section_
 

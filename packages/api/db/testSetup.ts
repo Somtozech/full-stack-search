@@ -8,4 +8,8 @@ export const setupDatabaseConnection = () => {
   afterEach(async () => {
     await db.reset();
   });
+
+  afterAll(async () => {
+    await db.close();
+  });
 };

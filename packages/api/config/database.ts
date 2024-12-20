@@ -55,3 +55,9 @@ export const reset = async () => {
     await getCollection(collection).deleteMany({});
   }
 };
+
+export const close = async () => {
+  if (client) {
+    await client.close();
+  }
+};
