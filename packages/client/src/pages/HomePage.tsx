@@ -1,4 +1,3 @@
-import React from "react";
 import { useSearch } from "../hooks/useSearch";
 import { SearchResults } from "../components/search/searchResults";
 
@@ -24,7 +23,7 @@ export const HomePage: React.FC = () => {
               />
 
               {searchTerm && (
-                <span className="left-pan cursor-pointer" onClick={clearSearch}>
+                <span data-testid="search-clear-button" className="left-pan cursor-pointer" onClick={clearSearch}>
                   <i className="fa fa-close text-muted"></i>
                 </span>
               )}

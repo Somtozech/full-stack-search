@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useFetchCountryByIdQuery } from "../services/apiSlice";
 import { getErrorMessage } from "../utils/error";
@@ -10,13 +9,12 @@ export const CountryPage: React.FC = () => {
     data: country,
     isLoading,
     error,
-    isError,
   } = useFetchCountryByIdQuery(id!, {
     skip: !id,
   });
 
   if (isLoading) return <div className="text-center mt-5">Loading...</div>;
-  if (isError) return <div className="text-center mt-5">Error: {getErrorMessage(error)}</div>;
+  if (error) return <div className="text-center mt-5">Error: {getErrorMessage(error)}</div>;
   if (!country) return <div className="text-center mt-5">No country found</div>;
 
   return (

@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useFetchHotelByIdQuery } from "../services/apiSlice";
 import { getErrorMessage } from "../utils/error";
