@@ -7,7 +7,7 @@ import { NotFoundError } from "../utils/errors";
 
 export const getHotelById = async (id: string): Promise<Hotel> => {
   if (!ObjectId.isValid(id)) {
-    throw new NotFoundError("Invalid hotel ID");
+    throw new NotFoundError("Hotel not found");
   }
 
   const hotel = await getCollection<Hotel>(AvailableCollections.Hotels).findOne({ _id: new ObjectId(id) });
