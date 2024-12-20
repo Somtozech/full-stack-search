@@ -6,7 +6,7 @@ import { NotFoundError } from "../utils/errors";
 
 export const getCountryById = async (id: string): Promise<Country> => {
   if (!ObjectId.isValid(id)) {
-    throw new NotFoundError("Invalid country ID");
+    throw new NotFoundError("Country not found");
   }
 
   const country = await getCollection<Country>(AvailableCollections.Countries).findOne({ _id: new ObjectId(id) });
